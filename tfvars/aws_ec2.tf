@@ -5,7 +5,11 @@ resource "aws_instance" "terraform" {
 
   vpc_security_group_ids = [aws_security_group.allow_ssh_terraform.id]
 
-  tags = {
-    Name = "each.key"
-  }
+  tags = merge(
+    var.common_tags,
+    var.tags,
+    {
+       Name = each.key
+    }
+  )
 }
